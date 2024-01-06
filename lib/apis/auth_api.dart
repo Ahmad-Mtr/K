@@ -8,13 +8,22 @@ import 'package:x_clone/core/providers.dart';
 // want to signup, want to get user account -> Account
 // want to access user related data -> model.Account or model.User
 
-final AuthAPIProvider = Provider((ref) {
+final authAPIProvider = Provider<AuthAPI>((ref) {
   final account = ref.watch(appwriteAccountProvider);
-  AuthAPI(account: account);
+  if (account != null) {
+    return AuthAPI(account: account);
+  } else {
+    throw UnimplementedError(
+        'account is not available yet'); // Or handle the null case differently
+  }
 });
 
 abstract class IAuthAPI {
   FutureEither<model.User> signUp({
+    required String email,
+    required String password,
+  });
+  FutureEither<model.Session> login({
     required String email,
     required String password,
   });
@@ -38,6 +47,27 @@ class AuthAPI implements IAuthAPI {
       return left(
         Failure(e.message ?? 'Some unexpected error occured', stackTrace),
       );
+    } catch (e, stackTrace) {
+      return left(
+        Failure(e.toString(), stackTrace),
+      );
+    }
+  }
+
+  @override
+  FutureEither<model.Session> login({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final session =
+          await _account.createEmailSession(email: email, password: password);
+      return Right(session);
+    } on AppwriteException catch (e, stackTrace) {
+      return left(Failure(
+        e.message ?? 'Some Unexpected thing occured',
+        stackTrace,
+      ));
     } catch (e, stackTrace) {
       return left(
         Failure(e.toString(), stackTrace),
