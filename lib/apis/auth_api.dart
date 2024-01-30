@@ -13,8 +13,7 @@ final authAPIProvider = Provider<AuthAPI>((ref) {
   if (account != null) {
     return AuthAPI(account: account);
   } else {
-    throw UnimplementedError(
-        'account is not available yet'); // Or handle the null case differently
+    throw UnimplementedError('account is not available yet');
   }
 });
 
