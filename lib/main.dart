@@ -21,14 +21,16 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: !false,
       title: 'X Clone',
       theme: AppTheme.theme,
-      home: ref.watch(CurrentUserAccountProvider).when(
+      home: ref.watch(currentUserAccountProvider).when(
             data: (user) {
               if (user != null) {
                 return const HomeView();
               }
               return const SignUpView();
             },
-            error: (error, st) => ErrorPage(error: error.toString()),
+            error: (error, st) => ErrorPage(
+              error: error.toString(),
+            ),
             loading: () => const LoadingPage(),
           ),
     );

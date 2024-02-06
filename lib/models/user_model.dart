@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/foundation.dart';
 
 @immutable
@@ -50,29 +48,31 @@ class UserModel {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'email': email,
-      'name': name,
-      'followers': followers,
-      'following': following,
-      'profilePic': profilePic,
-      'bannerPic': bannerPic,
-      'bio': bio,
-      'isTwitterBlue': isTwitterBlue,
-    };
+    final result = <String, dynamic>{};
+
+    result.addAll({'email': email});
+    result.addAll({'name': name});
+    result.addAll({'followers': followers});
+    result.addAll({'following': following});
+    result.addAll({'profilePic': profilePic});
+    result.addAll({'bannerPic': bannerPic});
+    result.addAll({'bio': bio});
+    result.addAll({'isTwitterBlue': isTwitterBlue});
+
+    return result;
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      email: map['email'] as String,
-      name: map['name'] as String,
-      followers: List<String>.from(map['followers'] as List<String>),
-      following: List<String>.from(map['following'] as List<String>),
-      profilePic: map['profilePic'] as String,
-      bannerPic: map['bannerPic'] as String,
-      uid: map['\$id'] as String,
-      bio: map['bio'] as String,
-      isTwitterBlue: map['isTwitterBlue'] as bool,
+      email: map['email'] ?? '',
+      name: map['name'] ?? '',
+      followers: List<String>.from(map['followers']),
+      following: List<String>.from(map['following']),
+      profilePic: map['profilePic'] ?? '',
+      bannerPic: map['bannerPic'] ?? '',
+      uid: map['\$id'] ?? '',
+      bio: map['bio'] ?? '',
+      isTwitterBlue: map['isTwitterBlue'] ?? false,
     );
   }
 
@@ -82,10 +82,11 @@ class UserModel {
   }
 
   @override
-  bool operator ==(covariant UserModel other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other.email == email &&
+    return other is UserModel &&
+        other.email == email &&
         other.name == name &&
         listEquals(other.followers, followers) &&
         listEquals(other.following, following) &&

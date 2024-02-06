@@ -8,13 +8,9 @@ import 'package:x_clone/core/providers.dart';
 // want to signup, want to get user account -> Account
 // want to access user related data -> model.Account or model.User
 
-final authAPIProvider = Provider<AuthAPI>((ref) {
+final authAPIProvider = Provider((ref) {
   final account = ref.watch(appwriteAccountProvider);
-  if (account != null) {
-    return AuthAPI(account: account);
-  } else {
-    throw UnimplementedError('account is not available yet');
-  }
+  return AuthAPI(account: account);
 });
 
 abstract class IAuthAPI {
@@ -37,7 +33,7 @@ class AuthAPI implements IAuthAPI {
   @override
   Future<model.User?> currentUserAccount() async {
     try {
-      return _account.get();
+      return await _account.get();
     } on AppwriteException {
       return null;
     } catch (e) {
