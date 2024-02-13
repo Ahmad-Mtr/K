@@ -41,6 +41,9 @@ dependencies:
   fpdart: ^1.1.0
   image_picker: ^1.0.7
   carousel_slider: ^4.2.1
+  timeago: ^3.6.1
+  string_tokenizer_1: ^1.0.2
+  any_link_preview: ^3.0.1
 
 dev_dependencies:
   flutter_test:

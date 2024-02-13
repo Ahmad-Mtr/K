@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:x_clone/constants/assets_constants.dart';
+import 'package:x_clone/features/tweet/widgets/tweet_list.dart';
 import 'package:x_clone/theme/pallete.dart';
 
 class UIconstants {
@@ -15,8 +16,8 @@ class UIconstants {
     );
   }
 
-  static List<Widget> bottomTabBarPages = [
-    Text('Feed'),
+  static const List<Widget> bottomTabBarPages = [
+    TweetList(),
     Text('data'),
     Text('Notifications'),
   ];
