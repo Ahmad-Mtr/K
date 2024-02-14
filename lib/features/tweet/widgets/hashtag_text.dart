@@ -46,5 +46,4 @@ class HashtagText extends StatelessWidget {
       ),
     );
   }
-//TODO: Check TODOs.
 }
