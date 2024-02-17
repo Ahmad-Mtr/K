@@ -26,9 +26,20 @@ final getTweetsProvider = FutureProvider((ref) {
   return tweetController.getTweets();
 });
 
+final getRepliesToTweetsProvider = FutureProvider.family((ref, Tweet tweet) {
+  final tweetController = ref.watch(tweetControllerProvider.notifier);
+
+  return tweetController.getRepliesToTweet(tweet);
+});
+
 final getLatestTweetProvider = StreamProvider.autoDispose((ref) {
   final tweetAPI = ref.watch(tweetAPIProvider);
   return tweetAPI.getLatestTweet();
+});
+
+final getTweetByIdProvider = FutureProvider.family((ref, String id) async {
+  final tweetController = ref.watch(tweetControllerProvider.notifier);
+  return tweetController.getTweetById(id);
 });
 
 class TweetController extends StateNotifier<bool> {
@@ -47,6 +58,11 @@ class TweetController extends StateNotifier<bool> {
   Future<List<Tweet>> getTweets() async {
     final tweetList = await _tweetAPI.getTweets();
     return tweetList.map((tweet) => Tweet.fromMap(tweet.data)).toList();
+  }
+
+  Future<Tweet> getTweetById(String id) async {
+    final tweet = await _tweetAPI.getTweetById(id);
+    return Tweet.fromMap(tweet.data);
   }
 
   void likeTweet(Tweet tweet, UserModel user) async {
@@ -89,6 +105,7 @@ class TweetController extends StateNotifier<bool> {
   void shareTweet({
     required List<File> images,
     required String text,
+    required String repliedTo,
     required BuildContext context,
   }) {
     if (text.isEmpty) {
@@ -99,11 +116,13 @@ class TweetController extends StateNotifier<bool> {
       _shareImageTweet(
         images: images,
         text: text,
+        repliedTo: repliedTo,
         context: context,
       );
     } else {
       _shareTextTweet(
         text: text,
+        repliedTo: repliedTo,
         context: context,
       );
     }
@@ -112,6 +131,7 @@ class TweetController extends StateNotifier<bool> {
   void _shareImageTweet({
     required List<File> images,
     required String text,
+    required String repliedTo,
     required BuildContext context,
   }) async {
     state = true;
@@ -134,6 +154,7 @@ class TweetController extends StateNotifier<bool> {
       id: '',
       reshareCount: 0,
       retweetedBy: '',
+      repliedTo: repliedTo,
     );
     final res = await _tweetAPI.shareTweet(tweet);
     state = false;
@@ -142,6 +163,7 @@ class TweetController extends StateNotifier<bool> {
 
   void _shareTextTweet({
     required String text,
+    required String repliedTo,
     required BuildContext context,
   }) async {
     state = true;
@@ -163,6 +185,7 @@ class TweetController extends StateNotifier<bool> {
       id: '',
       reshareCount: 0,
       retweetedBy: '',
+      repliedTo: repliedTo,
     );
     final res = await _tweetAPI.shareTweet(tweet);
     state = false;
@@ -187,5 +210,11 @@ class TweetController extends StateNotifier<bool> {
       if (word.startsWith('#')) hashtags.add(word);
     }
     return hashtags;
+  }
+
+  Future<List<Tweet>> getRepliesToTweet(Tweet tweet) async {
+    final documents = await _tweetAPI.getRepliesToTweet(tweet);
+
+    return documents.map((e) => Tweet.fromMap(e.data)).toList();
   }
 }
