@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:x_clone/common/common.dart';
+import 'package:x_clone/constants/assets_constants.dart';
 import 'package:x_clone/core/utils.dart';
 import 'package:x_clone/features/auth/controller/auth_controller.dart';
 import 'package:x_clone/features/user_profile/controller/user_profile_controller.dart';
@@ -125,8 +126,9 @@ class _EditProfileViewState extends ConsumerState<EditProfileView> {
                                   radius: 40,
                                 )
                               : CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(user.profilePic),
+                                  backgroundImage: user.profilePic.isEmpty
+                                      ? const NetworkImage(AssetsConstants.avtr)
+                                      : NetworkImage(user.profilePic),
                                   radius: 40,
                                 ),
                         ),

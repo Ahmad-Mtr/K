@@ -1,6 +1,7 @@
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:like_button/like_button.dart';
 import 'package:x_clone/common/common.dart';
@@ -48,8 +49,10 @@ class TweetCard extends ConsumerWidget {
                             child: Container(
                               margin: const EdgeInsets.all(10),
                               child: CircleAvatar(
-                                backgroundImage: NetworkImage(user.profilePic),
-                                radius: 30,
+                                backgroundImage: user.profilePic.isEmpty
+                                    ? const NetworkImage(AssetsConstants.avtr)
+                                    : NetworkImage(user.profilePic),
+                                radius: 30.r,
                               ),
                             ),
                           ),
@@ -73,9 +76,9 @@ class TweetCard extends ConsumerWidget {
                                       ),
                                       Text(
                                         '${tweet.retweetedBy} retweeted',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           color: Pallete.greyColor,
-                                          fontSize: 16,
+                                          fontSize: 16.sp,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -84,23 +87,34 @@ class TweetCard extends ConsumerWidget {
                                 Row(
                                   children: [
                                     Container(
-                                      margin: const EdgeInsets.only(right: 5),
+                                      margin: EdgeInsets.only(
+                                          right: user.isTwitterBlue ? 1 : 5),
                                       child: Text(
                                         user.name,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 19,
+                                          fontSize: 19.sp,
                                         ),
                                       ),
                                     ),
+                                    if (user.isTwitterBlue)
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 3.0),
+                                        child: SvgPicture.asset(
+                                          AssetsConstants.verifiedIcon,
+                                          colorFilter: const ColorFilter.mode(
+                                              Colors.white, BlendMode.srcIn),
+                                        ),
+                                      ),
                                     Text(
                                       '@${user.name} - ${timeago.format(
                                         tweet.tweetedAt,
                                         locale: 'en_short',
                                       )}',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         color: Pallete.greyColor,
-                                        fontSize: 17,
+                                        fontSize: 17.sp,
                                       ),
                                     ),
                                   ],
@@ -122,18 +136,18 @@ class TweetCard extends ConsumerWidget {
                                             return RichText(
                                               text: TextSpan(
                                                   text: 'Replying to',
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                     color: Pallete.greyColor,
-                                                    fontSize: 16,
+                                                    fontSize: 16.sp,
                                                   ),
                                                   children: [
                                                     TextSpan(
                                                         text:
                                                             ' @${replyingToUser?.name}',
-                                                        style: const TextStyle(
+                                                        style: TextStyle(
                                                           color:
                                                               Pallete.blueColor,
-                                                          fontSize: 16,
+                                                          fontSize: 16.sp,
                                                         ))
                                                   ]),
                                             );
@@ -194,7 +208,7 @@ class TweetCard extends ConsumerWidget {
                                           ref
                                               .read(tweetControllerProvider
                                                   .notifier)
-                                              .likeTweet(tweet, user);
+                                              .likeTweet(tweet, currentUser);
                                           return !isLiked;
                                         },
                                         isLiked: tweet.likes

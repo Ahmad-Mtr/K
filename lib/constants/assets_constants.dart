@@ -15,4 +15,7 @@ class AssetsConstants {
   static const String likeFilledIcon = '$_svgsPath/like_filled.svg';
   static const String viewsIcon = '$_svgsPath/views.svg';
   static const String verifiedIcon = '$_svgsPath/verified.svg';
+  static const String x = '$_svgsPath/x.svg';
+  static const String avtr =
+      'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png';
 }

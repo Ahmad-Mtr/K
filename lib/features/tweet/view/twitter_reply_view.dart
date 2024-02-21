@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:x_clone/common/common.dart';
 import 'package:x_clone/constants/appwrite_constants.dart';
 import 'package:x_clone/features/tweet/controller/tweet_controller.dart';
@@ -100,16 +101,22 @@ class TwitterReplyScreen extends ConsumerWidget {
               )
         ],
       ),
-      bottomNavigationBar: TextField(
-        onSubmitted: (value) {
-          ref.read(tweetControllerProvider.notifier).shareTweet(
-            images: [],
-            text: value,
-            context: context,
-            repliedTo: tweet.id,
-          );
-        },
-        decoration: const InputDecoration(hintText: 'Tweet your Reply'),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.0.h),
+        child: TextField(
+          onSubmitted: (value) {
+            ref.read(tweetControllerProvider.notifier).shareTweet(
+              images: [],
+              text: value,
+              context: context,
+              repliedTo: tweet.id,
+              repliedToUserId: tweet.uid,
+            );
+          },
+          decoration: InputDecoration(
+              hintText: 'Tweet your Reply',
+              contentPadding: EdgeInsets.symmetric(horizontal: 10.0.w)),
+        ),
       ),
     );
   }

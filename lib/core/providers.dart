@@ -31,3 +31,16 @@ final appwriteRealtimeProvider = Provider(
     return Realtime(client);
   },
 );
+
+final appwriteRealtimeProvider2 = Provider(
+  (ref) {
+    final client = ref.watch(appwriteClientProvider);
+    return Realtime(client);
+  },
+);
+final appwriteNotificationsRealtimeProvider = Provider(
+  (ref) {
+    final client = ref.watch(appwriteClientProvider);
+    return Realtime(client);
+  },
+);

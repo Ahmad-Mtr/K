@@ -5,8 +5,10 @@ import 'package:x_clone/features/auth/controller/auth_controller.dart';
 import 'package:x_clone/features/auth/view/signup_view.dart';
 import 'package:x_clone/features/home/view/home_view.dart';
 import 'package:x_clone/theme/app_theme.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -16,22 +18,26 @@ class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: !false,
-      title: 'X Clone',
-      theme: AppTheme.theme,
-      home: ref.watch(currentUserAccountProvider).when(
-            data: (user) {
-              if (user != null) {
-                return const HomeView();
-              }
-              return const SignUpView();
-            },
-            error: (error, st) => ErrorPage(
-              error: error.toString(),
+    return ScreenUtilInit(
+      designSize: const Size(411.4, 890.3),
+      builder: (_, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'K',
+        theme: AppTheme.theme,
+        home: ref.watch(currentUserAccountProvider).when(
+              data: (user) {
+                ref.watch(currentUserAccountProvider);
+                if (user != null) {
+                  return const HomeView();
+                }
+                return const SignUpView();
+              },
+              error: (error, st) => ErrorPage(
+                error: error.toString(),
+              ),
+              loading: () => const LoadingPage(),
             ),
-            loading: () => const LoadingPage(),
-          ),
+      ),
     );
   }
 }

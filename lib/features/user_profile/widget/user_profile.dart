@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:x_clone/common/common.dart';
+import 'package:x_clone/constants/assets_constants.dart';
 import 'package:x_clone/features/auth/controller/auth_controller.dart';
 import 'package:x_clone/features/tweet/widgets/tweet_card.dart';
 import 'package:x_clone/features/user_profile/controller/user_profile_controller.dart';
@@ -40,7 +42,9 @@ class UserProfile extends ConsumerWidget {
                       Positioned(
                         bottom: 0,
                         child: CircleAvatar(
-                          backgroundImage: NetworkImage(user.profilePic),
+                          backgroundImage: user.profilePic.isEmpty
+                              ? const NetworkImage(AssetsConstants.avtr)
+                              : NetworkImage(user.profilePic),
                           radius: 45,
                         ),
                       ),
@@ -51,6 +55,14 @@ class UserProfile extends ConsumerWidget {
                           onPressed: () {
                             if (currentUser.uid == user.uid) {
                               Navigator.push(context, EditProfileView.route());
+                            } else {
+                              ref
+                                  .read(userProfileControllerProvider.notifier)
+                                  .followUser(
+                                    user: user,
+                                    context: context,
+                                    currentUser: currentUser,
+                                  );
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -65,7 +77,9 @@ class UserProfile extends ConsumerWidget {
                           child: Text(
                             currentUser.uid == user.uid
                                 ? 'Edit Profile'
-                                : 'Follow',
+                                : currentUser.following.contains(user.uid)
+                                    ? 'Unfollow'
+                                    : 'Follow',
                             style: const TextStyle(
                               color: Pallete.whiteColor,
                             ),
@@ -76,17 +90,30 @@ class UserProfile extends ConsumerWidget {
                   ),
                 ),
                 SliverPadding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(10),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        Text(
-                          user.name,
-                          style: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              user.name,
+                              style: const TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            if (user.isTwitterBlue)
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 2.0,
+                                ),
+                                child: SvgPicture.asset(
+                                    AssetsConstants.verifiedIcon),
+                              ),
+                          ],
                         ),
+                        const SizedBox(height: 2),
                         Text(
                           '@${user.name}',
                           style: const TextStyle(
@@ -94,6 +121,7 @@ class UserProfile extends ConsumerWidget {
                             color: Pallete.greyColor,
                           ),
                         ),
+                        const SizedBox(height: 5),
                         Text(
                           user.bio,
                           style: const TextStyle(

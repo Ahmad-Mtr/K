@@ -6,6 +6,7 @@ import 'package:x_clone/apis/auth_api.dart';
 import 'package:x_clone/apis/user_api.dart';
 import 'package:x_clone/core/utils.dart';
 import 'package:x_clone/features/auth/view/login_view.dart';
+import 'package:x_clone/features/auth/view/signup_view.dart';
 import 'package:x_clone/features/home/view/home_view.dart';
 import 'package:x_clone/models/user_model.dart';
 
@@ -17,8 +18,8 @@ final authControllerProvider =
   );
 });
 
-final currentUserDetailsProvider = FutureProvider((ref) {
-  final currentUserId = ref.watch(currentUserAccountProvider).value!.$id;
+final currentUserDetailsProvider = FutureProvider((ref) async {
+  final currentUserId = ref.watch(currentUserAccountProvider).value?.$id ?? '';
   final userDetails = ref.watch(userDetailsProvider(currentUserId));
   return userDetails.value;
 });
@@ -113,6 +114,14 @@ class AuthController extends StateNotifier<bool> {
     final updatedUser = UserModel.fromMap(document.data);
 
     return updatedUser;
+  }
+
+  void logout(BuildContext context) async {
+    final res = await _authAPI.logout();
+    res.fold(
+        (l) => null,
+        (r) => Navigator.pushAndRemoveUntil(
+            context, SignUpView.route(), (route) => false));
   }
 }
 // 1:31:13

@@ -36,7 +36,12 @@ class NotificationTile extends StatelessWidget {
                           Pallete.whiteColor, BlendMode.srcIn),
                       height: 20,
                     )
-                  : null,
+                  : SvgPicture.asset(
+                      AssetsConstants.commentIcon,
+                      colorFilter: const ColorFilter.mode(
+                          Pallete.whiteColor, BlendMode.srcIn),
+                      height: 20,
+                    ),
       title: Text(notification.text),
     );
   }
