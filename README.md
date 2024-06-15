@@ -1,7 +1,7 @@
 <div align="center">
     <img alt="K Logo" width="60" style="border-radius:20px;" src="./assets/K.png">
 
-<p>The <span style="text-decoration: line-through;">Buggy</span> X clone.</p>
+<p>The <span style="text-decoration: line-through;">Buggy</span> Twitter clone.</p>
 </div>
 
 ---
