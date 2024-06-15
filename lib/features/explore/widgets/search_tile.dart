@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:x_clone/constants/assets_constants.dart';
 import 'package:x_clone/features/user_profile/view/user_profile_view.dart';
 import 'package:x_clone/models/user_model.dart';
 import 'package:x_clone/theme/pallete.dart';
@@ -17,7 +18,9 @@ class SearchTile extends StatelessWidget {
         Navigator.push(context, UserProfileView.route(userModel));
       },
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(userModel.profilePic),
+        backgroundImage: userModel.profilePic.isEmpty
+            ? const NetworkImage(AssetsConstants.avtr)
+            : NetworkImage(userModel.profilePic),
         radius: 30,
       ),
       title: Text(

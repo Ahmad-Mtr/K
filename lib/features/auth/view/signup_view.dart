@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:x_clone/common/common.dart';
 import 'package:x_clone/constants/constants.dart';
 import 'package:x_clone/features/auth/controller/auth_controller.dart';
@@ -45,7 +46,7 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
     return Scaffold(
       appBar: appbar,
       body: isloading
-          ? Loader()
+          ? const Loader()
           : Center(
               child: SingleChildScrollView(
                 child: Padding(
@@ -81,13 +82,13 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
                       RichText(
                         text: TextSpan(
                           text: "Already have an account?",
-                          style: const TextStyle(
-                              color: Pallete.whiteColor, fontSize: 16),
+                          style:  TextStyle(
+                              color: Pallete.whiteColor, fontSize: 16.sp),
                           children: [
                             TextSpan(
                               text: '  Log in',
-                              style: const TextStyle(
-                                  color: Pallete.blueColor, fontSize: 16),
+                              style:  TextStyle(
+                                  color: Pallete.blueColor, fontSize: 16.sp),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.push(

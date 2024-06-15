@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:x_clone/theme/pallete.dart';
 
 class AuthField extends StatelessWidget {
@@ -28,7 +29,7 @@ class AuthField extends StatelessWidget {
         ),
         hintText: hintText,
         contentPadding: const EdgeInsets.all(22),
-        hintStyle: const TextStyle(fontSize: 18),
+        hintStyle: TextStyle(fontSize: 18.sp),
       ),
     );
   }

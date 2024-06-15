@@ -36,6 +36,7 @@ class _CreateTweetViewState extends ConsumerState<CreateTweetView> {
           text: tweetTextController.text,
           repliedTo: '',
           context: context,
+          repliedToUserId: '',
         );
     Navigator.pop(context);
   }
