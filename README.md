@@ -1,16 +1,21 @@
-# x_clone
+<div align="center">
+    <img alt="K Logo" width="60" style="border-radius:20px;" src="./assets/K.png">
 
-A new Flutter project.
+<p>The <span style="text-decoration: line-through;">Buggy</span> X clone.</p>
+</div>
 
-## Getting Started
+---
+This App is mostly the result of this [Tutorial](https://youtu.be/XnxZLhtkFeg?feature=shared).
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<details>
+<summary>📸 Screenshots</summary>
+<img alt="home" height="500" src="./assets/home.jpg">
+<img alt="home" height="500" src="./assets/profile.gif">
+<img alt="home" height="500" src="./assets/tweet.jpg">
+<img alt="home" height="500" src="./assets/reply.jpg">
+<img alt="home" height="500" src="./assets/search.jpg">
+<img alt="home" height="500" src="./assets/katze.jpg">
+<img alt="home" height="500" src="./assets/notifications.jpg">
+</details>
