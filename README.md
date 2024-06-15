@@ -5,6 +5,7 @@
 </div>
 
 ---
+
 This App is mostly the result of this [Tutorial](https://youtu.be/XnxZLhtkFeg?feature=shared).
 
 ---
@@ -19,3 +20,11 @@ This App is mostly the result of this [Tutorial](https://youtu.be/XnxZLhtkFeg?fe
 <img alt="home" height="500" src="./assets/katze.jpg">
 <img alt="home" height="500" src="./assets/notifications.jpg">
 </details>
+
+### Installation
+
+```bash
+git clone https://github.com/Ahmad-Mtr/K.git x_clone # All dependecies use x_clone as the root address, and I'm lazy enough to change it.
+
+flutter pub get
+```
