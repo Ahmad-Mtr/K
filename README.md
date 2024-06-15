@@ -22,6 +22,8 @@ This App is mostly the result of this [Tutorial](https://youtu.be/XnxZLhtkFeg?fe
 </details>
 
 ### Installation
+>[!WARNING]
+> If for some reason want to clone this repo... just don't, it's a waste of time.
 
 ```bash
 git clone https://github.com/Ahmad-Mtr/K.git x_clone # All dependecies use x_clone as the root address, and I'm lazy enough to change it.
